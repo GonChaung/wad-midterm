@@ -1,11 +1,11 @@
-import "./item-manager-app.css"
+import "./item-manager-app.css";
 import { useState, useRef } from "react";
-import deleteLogo from '../assets/delete.svg';
-import stationaryLogo from '../assets/ink_pen.svg';
+import deleteLogo from "../assets/delete.svg";
+import stationaryLogo from "../assets/ink_pen.svg";
 import kitchenwareLogo from "../assets/flatware.svg";
 import applianceLogo from "../assets/electrical_services.svg";
 
-function ItemManager () {
+function ItemManager() {
   /*
    * !!! IMPORTANT !!!
    * - You MUST use the given states and refs in your code.
@@ -15,17 +15,15 @@ function ItemManager () {
   const [errorMsg, setErrorMsg] = useState("");
   // You must use this ref for the item name input
   const itemName = useRef(null);
-  
-  // Additional refs and state
+
   const itemCategory = useRef(null);
   const itemPrice = useRef(null);
   const [nextId, setNextId] = useState(1);
 
-  // Category icon mapping
   const categoryIcons = {
-    "Stationary": stationaryLogo,
-    "Kitchenware": kitchenwareLogo,
-    "Appliance": applianceLogo
+    Stationary: stationaryLogo,
+    Kitchenware: kitchenwareLogo,
+    Appliance: applianceLogo,
   };
 
   const handleAddItem = () => {
@@ -33,52 +31,46 @@ function ItemManager () {
     const category = itemCategory.current.value;
     const price = parseFloat(itemPrice.current.value);
 
-    // Validation: Name must not be empty
     if (name === "") {
       setErrorMsg("Item name must not be empty");
       return;
     }
 
-    // Validation: Check for duplicates (case insensitive)
-    const isDuplicate = items.some(item => 
-      item.name.toLowerCase() === name.toLowerCase()
+    const isDuplicate = items.some(
+      (item) => item.name.toLowerCase() === name.toLowerCase()
     );
     if (isDuplicate) {
       setErrorMsg("Item must not be duplicated");
       return;
     }
 
-    // Validation: Category must be selected
     if (category === "") {
       setErrorMsg("Please select a category");
       return;
     }
 
-    // Validation: Price must not be less than 0
     if (isNaN(price) || price < 0) {
       setErrorMsg("Price must not be less than 0");
       return;
     }
 
-    // Clear error and add item
     setErrorMsg("");
     const newItem = {
       id: nextId,
       name: name,
       category: category,
-      price: price
+      price: price,
     };
     setItems([...items, newItem]);
     setNextId(nextId + 1);
 
-    // Clear inputs
     itemName.current.value = "";
     itemCategory.current.value = "";
     itemPrice.current.value = "";
   };
 
   const handleDelete = (id) => {
-    setItems(items.filter(item => item.id !== id));
+    setItems(items.filter((item) => item.id !== id));
     setErrorMsg("");
   };
 
@@ -90,9 +82,7 @@ function ItemManager () {
    */
   return (
     <>
-      <div id="h1">
-        Item Management
-      </div>
+      <div id="h1">Item Management</div>
       <div id="data-area">
         <table id="item-table" className="item-table">
           <thead>
@@ -106,28 +96,28 @@ function ItemManager () {
           </thead>
           <tbody>
             {/*
-              * TODO: Your code goes here
-              * !!! IMPORTANT !!!
-              * - All items must be listed here (above the form row).
-              * - Your input form must be implemented as the LAST row in this table.
-              */}
-            
+             * TODO: Your code goes here
+             * !!! IMPORTANT !!!
+             * - All items must be listed here (above the form row).
+             * - Your input form must be implemented as the LAST row in this table.
+             */}
+
             {/* Display existing items */}
-            {items.map(item => (
+            {items.map((item) => (
               <tr key={item.id}>
                 <td>{item.id}</td>
                 <td>{item.name}</td>
                 <td>
-                  <img 
-                    src={categoryIcons[item.category]} 
+                  <img
+                    src={categoryIcons[item.category]}
                     alt={item.category}
                     className="category-icon"
                   />
                 </td>
-                <td>${item.price.toFixed(2)}</td>
+                <td>฿{item.price.toFixed(2)}</td>
                 <td>
-                  <img 
-                    src={deleteLogo} 
+                  <img
+                    src={deleteLogo}
                     alt="Delete"
                     onClick={() => handleDelete(item.id)}
                     className="delete-icon"
@@ -135,28 +125,26 @@ function ItemManager () {
                 </td>
               </tr>
             ))}
-            
+
             {/* Input form as the last row */}
             <tr>
               <td></td>
               <td>
-                <input 
-                  type="text" 
-                  ref={itemName}
-                  placeholder="Item name"
-                />
+                <input type="text" ref={itemName} placeholder="Item name" />
               </td>
               <td>
                 <select ref={itemCategory} defaultValue="">
-                  <option value="" disabled>Select category</option>
+                  <option value="" disabled>
+                    Select category
+                  </option>
                   <option value="Stationary">Stationary</option>
                   <option value="Kitchenware">Kitchenware</option>
                   <option value="Appliance">Appliance</option>
                 </select>
               </td>
               <td>
-                <input 
-                  type="number" 
+                <input
+                  type="number"
                   ref={itemPrice}
                   placeholder="0.00"
                   step="0.01"
@@ -178,4 +166,4 @@ function ItemManager () {
   );
 }
 
-export default ItemManager
+export default ItemManager;

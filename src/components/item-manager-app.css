@@ -68,7 +68,6 @@
   background-color: #004085;
 }
 
-/* Icon styling */
 .category-icon,
 .delete-icon {
   width: 24px;
@@ -85,7 +84,6 @@
   opacity: 0.7;
 }
 
-/* Error message styling */
 #error-message {
   color: #dc3545;
   margin-top: 15px;
@@ -94,7 +92,6 @@
   font-weight: 500;
 }
 
-/* Column width adjustments */
 #col-item-id {
   width: 60px;
 }
@@ -113,7 +110,6 @@
   text-align: center;
 }
 
-/* Center align icons in their cells */
 .item-table td:has(.category-icon),
 .item-table td:has(.delete-icon) {
   text-align: center;
